@@ -69,6 +69,7 @@ jobs:
           
           # Extrair informações de tokens
           INPUT_TOKENS=$(echo "$RESPONSE" | jq -r '.usageMetadata.promptTokenCount // "N/A"')
+          THINKING_TOKENS=$(echo "$RESPONSE" | jq -r '.usageMetadata.thoughtsTokenCount // "N/A"')
           OUTPUT_TOKENS=$(echo "$RESPONSE" | jq -r '.usageMetadata.candidatesTokenCount // "N/A"')
           TOTAL_TOKENS=$(echo "$RESPONSE" | jq -r '.usageMetadata.totalTokenCount // "N/A"')
 
@@ -76,6 +77,7 @@ jobs:
           echo "$REVIEW_TEXT" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
           echo "INPUT_TOKENS=$INPUT_TOKENS" >> $GITHUB_OUTPUT
+          echo "THINKING_TOKENS=$THINKING_TOKENS" >> $GITHUB_OUTPUT
           echo "OUTPUT_TOKENS=$OUTPUT_TOKENS" >> $GITHUB_OUTPUT
           echo "TOTAL_TOKENS=$TOTAL_TOKENS" >> $GITHUB_OUTPUT
 
@@ -90,4 +92,4 @@ jobs:
             ${{ steps.gemini.outputs.REVIEW }}
             
             ---
-            📊 **Token Usage:** Input: `${{ steps.gemini.outputs.INPUT_TOKENS }}` | Output: `${{ steps.gemini.outputs.OUTPUT_TOKENS }}` | Total: `${{ steps.gemini.outputs.TOTAL_TOKENS }}`
+            📊 **Token Usage:** Input: `${{ steps.gemini.outputs.INPUT_TOKENS }}` | Thinking: `${{ steps.gemini.outputs.THINKING_TOKENS }}` | Output: `${{ steps.gemini.outputs.OUTPUT_TOKENS }}` | Total: `${{ steps.gemini.outputs.TOTAL_TOKENS }}`
